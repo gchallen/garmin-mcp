@@ -18,20 +18,51 @@ def register_tools(app):
     """Register all activity management tools with the MCP server app"""
     
     @app.tool()
-    async def get_activities_by_date(start_date: str, end_date: str, activity_type: str = "") -> str:
+    async def get_activities_by_date(start_date: str, end_date: str, activity_type: str = "", summary_only: bool = False, max_results: int = 50) -> str:
         """Get activities data between specified dates, optionally filtered by activity type
-        
+
         Args:
             start_date: Start date in YYYY-MM-DD format
             end_date: End date in YYYY-MM-DD format
             activity_type: Optional activity type filter (e.g., cycling, running, swimming)
+            summary_only: If True, return only basic activity info without detailed metrics
+            max_results: Maximum number of activities to return (default 50, max 100)
         """
         try:
             activities = garmin_client.get_activities_by_date(start_date, end_date, activity_type)
             if not activities:
                 return f"No activities found between {start_date} and {end_date}" + \
                        (f" for activity type '{activity_type}'" if activity_type else "")
-            
+
+            # Limit results
+            max_results = min(max_results, 100)
+            total_activities = len(activities) if isinstance(activities, list) else 0
+
+            if isinstance(activities, list):
+                if len(activities) > max_results:
+                    activities = activities[:max_results]
+                    result_note = f"\n\nShowing first {max_results} of {total_activities} activities. Adjust max_results or use date ranges to see more."
+                else:
+                    result_note = ""
+
+                if summary_only:
+                    # Return simplified version
+                    summary = []
+                    for act in activities:
+                        if isinstance(act, dict):
+                            summary.append({
+                                "activityName": act.get('activityName', 'Unknown'),
+                                "activityType": act.get('activityType', {}).get('typeKey', 'Unknown') if isinstance(act.get('activityType'), dict) else 'Unknown',
+                                "startTimeLocal": act.get('startTimeLocal'),
+                                "activityId": act.get('activityId'),
+                                "distance": round(act.get('distance', 0) / 1000, 2) if 'distance' in act else None,
+                                "duration": act.get('duration'),
+                                "calories": act.get('calories')
+                            })
+                    return {"activities": summary, "count": len(summary), "total_found": total_activities}
+
+                return str(activities) + result_note if result_note else activities
+
             return activities
         except Exception as e:
             return f"Error retrieving activities by date: {str(e)}"

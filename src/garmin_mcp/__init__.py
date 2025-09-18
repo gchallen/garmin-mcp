@@ -133,23 +133,53 @@ def main():
 
     # Add activity listing tool directly to the app
     @app.tool()
-    async def list_activities(limit: int = 5) -> str:
-        """List recent Garmin activities"""
+    async def list_activities(limit: int = 5, offset: int = 0, summary_only: bool = False) -> str:
+        """List recent Garmin activities with pagination support
+
+        Args:
+            limit: Maximum number of activities to return (default 5, max 100)
+            offset: Number of activities to skip (for pagination)
+            summary_only: If True, return only basic info (name, type, date, ID) without detailed metrics
+        """
         try:
-            activities = garmin_client.get_activities(0, limit)
+            # Cap the limit to prevent excessive data
+            limit = min(limit, 100)
+            activities = garmin_client.get_activities(offset, limit)
 
             if not activities:
-                return "No activities found."
+                return f"No activities found at offset {offset}."
 
-            result = f"Last {len(activities)} activities:\n\n"
+            result = f"Activities {offset + 1} to {offset + len(activities)}:\n\n"
             for idx, activity in enumerate(activities, 1):
-                result += f"--- Activity {idx} ---\n"
+                result += f"--- Activity {offset + idx} ---\n"
                 result += f"Activity: {activity.get('activityName', 'Unknown')}\n"
                 result += (
                     f"Type: {activity.get('activityType', {}).get('typeKey', 'Unknown')}\n"
                 )
                 result += f"Date: {activity.get('startTimeLocal', 'Unknown')}\n"
-                result += f"ID: {activity.get('activityId', 'Unknown')}\n\n"
+                result += f"ID: {activity.get('activityId', 'Unknown')}\n"
+
+                if not summary_only:
+                    # Add key metrics when not in summary mode
+                    if 'distance' in activity:
+                        result += f"Distance: {activity.get('distance', 0) / 1000:.2f} km\n"
+                    if 'duration' in activity:
+                        duration_sec = activity.get('duration', 0)
+                        hours = int(duration_sec // 3600)
+                        minutes = int((duration_sec % 3600) // 60)
+                        seconds = int(duration_sec % 60)
+                        result += f"Duration: {hours:02d}:{minutes:02d}:{seconds:02d}\n"
+                    if 'averageHR' in activity:
+                        result += f"Avg HR: {activity.get('averageHR')} bpm\n"
+                    if 'calories' in activity:
+                        result += f"Calories: {activity.get('calories')}\n"
+
+                result += "\n"
+
+            # Add pagination info
+            result += f"\nShowing {len(activities)} activities starting from position {offset + 1}\n"
+            if len(activities) == limit:
+                result += f"Use offset={offset + limit} to see the next {limit} activities."
 
             return result
         except Exception as e:
