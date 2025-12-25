@@ -57,4 +57,48 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving user profile settings: {str(e)}"
 
+    @app.tool()
+    async def get_heart_rate_zones() -> str:
+        """Get user's heart rate zones and max heart rate setting
+
+        Returns the configured max heart rate and heart rate zone boundaries
+        used for training zone calculations. Includes resting HR and lactate
+        threshold HR if available.
+        """
+        try:
+            # Use the biometric service endpoint for HR zones
+            hr_zones = garmin_client.connectapi("/biometric-service/heartRateZones")
+
+            if not hr_zones:
+                return "No heart rate zone data found."
+
+            # Handle list response (may contain sport-specific zones)
+            if isinstance(hr_zones, list):
+                # Find DEFAULT sport zones, or return all if no default
+                default_zones = next(
+                    (z for z in hr_zones if z.get("sport") == "DEFAULT"),
+                    hr_zones[0] if hr_zones else None
+                )
+                if default_zones:
+                    return {
+                        "maxHeartRate": default_zones.get("maxHeartRateUsed"),
+                        "restingHeartRate": default_zones.get("restingHeartRateUsed"),
+                        "lactateThresholdHeartRate": default_zones.get("lactateThresholdHeartRateUsed"),
+                        "trainingMethod": default_zones.get("trainingMethod"),
+                        "zones": {
+                            "zone1Floor": default_zones.get("zone1Floor"),
+                            "zone2Floor": default_zones.get("zone2Floor"),
+                            "zone3Floor": default_zones.get("zone3Floor"),
+                            "zone4Floor": default_zones.get("zone4Floor"),
+                            "zone5Floor": default_zones.get("zone5Floor"),
+                        },
+                        "sport": default_zones.get("sport"),
+                        "allSportZones": hr_zones if len(hr_zones) > 1 else None
+                    }
+
+            return hr_zones
+
+        except Exception as e:
+            return f"Error retrieving heart rate zones: {str(e)}"
+
     return app
