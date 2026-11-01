@@ -17,7 +17,7 @@ def configure(client):
 def register_tools(app):
     """Register all device-related tools with the MCP server app"""
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_devices() -> str:
         """Get all Garmin devices associated with the user account"""
         try:
@@ -28,7 +28,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving devices: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_device_last_used() -> str:
         """Get information about the last used Garmin device"""
         try:
@@ -39,7 +39,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving last used device: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_device_settings(device_id: str) -> str:
         """Get settings for a specific Garmin device
         
@@ -54,7 +54,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving device settings: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_primary_training_device() -> str:
         """Get information about the primary training device"""
         try:
@@ -65,7 +65,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving primary training device: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_device_solar_data(device_id: str, date: str) -> str:
         """Get solar data for a specific device
         
@@ -81,7 +81,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving solar data: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_device_alarms() -> str:
         """Get alarms from all Garmin devices"""
         try:

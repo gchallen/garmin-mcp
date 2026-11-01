@@ -17,7 +17,7 @@ def configure(client):
 def register_tools(app):
     """Register all women's health tools with the MCP server app"""
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_pregnancy_summary() -> str:
         """Get pregnancy summary data"""
         try:
@@ -28,7 +28,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving pregnancy summary: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_menstrual_data_for_date(date: str) -> str:
         """Get menstrual data for a specific date
         
@@ -43,7 +43,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving menstrual data: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_menstrual_calendar_data(start_date: str, end_date: str) -> str:
         """Get menstrual calendar data between specified dates
         

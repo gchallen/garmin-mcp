@@ -17,7 +17,7 @@ def configure(client):
 def register_tools(app):
     """Register all data management tools with the MCP server app"""
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def add_body_composition(
         date: str,
         weight: float,
@@ -70,7 +70,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error adding body composition data: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def set_blood_pressure(
         systolic: int,
         diastolic: int,
@@ -93,7 +93,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error setting blood pressure values: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def add_hydration_data(
         value_in_ml: int,
         cdate: str,

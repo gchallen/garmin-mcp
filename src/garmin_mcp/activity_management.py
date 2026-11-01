@@ -17,7 +17,7 @@ def configure(client):
 def register_tools(app):
     """Register all activity management tools with the MCP server app"""
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_activities_by_date(start_date: str, end_date: str, activity_type: str = "", summary_only: bool = False, max_results: int = 50) -> str:
         """Get activities data between specified dates, optionally filtered by activity type
 
@@ -67,7 +67,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving activities by date: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_activities_fordate(date: str) -> str:
         """Get activities for a specific date
         
@@ -83,7 +83,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving activities for date: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_activity(activity_id: int) -> str:
         """Get basic activity information
         
@@ -99,7 +99,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving activity: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_activity_splits(activity_id: int) -> str:
         """Get splits for an activity
         
@@ -115,7 +115,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving activity splits: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_activity_typed_splits(activity_id: int) -> str:
         """Get typed splits for an activity
         
@@ -131,7 +131,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving activity typed splits: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_activity_split_summaries(activity_id: int) -> str:
         """Get split summaries for an activity
         
@@ -147,7 +147,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving activity split summaries: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_activity_weather(activity_id: int) -> str:
         """Get weather data for an activity
         
@@ -163,7 +163,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving activity weather data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_activity_hr_in_timezones(activity_id: int) -> str:
         """Get heart rate data in different time zones for an activity
         
@@ -179,7 +179,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving activity heart rate time zone data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_activity_gear(activity_id: int) -> str:
         """Get gear data used for an activity
         
@@ -195,7 +195,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving activity gear data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_activity_exercise_sets(activity_id: int) -> str:
         """Get exercise sets for strength training activities
         

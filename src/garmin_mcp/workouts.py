@@ -17,7 +17,7 @@ def configure(client):
 def register_tools(app):
     """Register all workout-related tools with the MCP server app"""
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_workouts() -> str:
         """Get all workouts"""
         try:
@@ -28,7 +28,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving workouts: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_workout_by_id(workout_id: int) -> str:
         """Get details for a specific workout
         
@@ -43,7 +43,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving workout: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def download_workout(workout_id: int) -> str:
         """Download a workout as a FIT file (this will return a message about how to access the file)
         
@@ -60,7 +60,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error downloading workout: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def upload_workout(workout_json: str) -> str:
         """Upload a workout from JSON data
         
@@ -73,7 +73,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error uploading workout: {str(e)}"
             
-    @app.tool()
+    @app.tool(structured_output=False)
     async def upload_activity(file_path: str) -> str:
         """Upload an activity from a file (this is just a placeholder - file operations would need special handling)
         

@@ -17,7 +17,7 @@ def configure(client):
 def register_tools(app):
     """Register all weight management tools with the MCP server app"""
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_weigh_ins(start_date: str, end_date: str) -> str:
         """Get weight measurements between specified dates
         
@@ -33,7 +33,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving weight measurements: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_daily_weigh_ins(date: str) -> str:
         """Get weight measurements for a specific date
         
@@ -48,7 +48,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving daily weight measurements: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def delete_weigh_ins(date: str, delete_all: bool = True) -> str:
         """Delete weight measurements for a specific date
         
@@ -62,7 +62,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error deleting weight measurements: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def add_weigh_in(weight: float, unit_key: str = "kg") -> str:
         """Add a new weight measurement
         
@@ -76,7 +76,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error adding weight measurement: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def add_weigh_in_with_timestamps(
         weight: float, 
         unit_key: str = "kg", 

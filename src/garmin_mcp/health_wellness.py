@@ -17,7 +17,7 @@ def configure(client):
 def register_tools(app):
     """Register all health and wellness tools with the MCP server app"""
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_stats(date: str) -> str:
         """Get daily activity stats
         
@@ -33,7 +33,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving stats: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_user_summary(date: str) -> str:
         """Get user summary data (compatible with garminconnect-ha)
         
@@ -49,7 +49,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving user summary: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_body_composition(start_date: str, end_date: str = None) -> str:
         """Get body composition data for a single date or date range
         
@@ -71,7 +71,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving body composition data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_stats_and_body(date: str) -> str:
         """Get stats and body composition data
         
@@ -87,7 +87,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving stats and body composition data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_steps_data(date: str, hourly_only: bool = False) -> str:
         """Get steps data with optional hourly aggregation
 
@@ -122,7 +122,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving steps data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_daily_steps(start_date: str, end_date: str) -> str:
         """Get steps data for a date range
         
@@ -139,7 +139,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving daily steps data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_training_readiness(date: str) -> str:
         """Get training readiness data
         
@@ -155,7 +155,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving training readiness data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_body_battery(start_date: str, end_date: str) -> str:
         """Get body battery data
         
@@ -172,7 +172,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving body battery data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_body_battery_events(date: str) -> str:
         """Get body battery events data
         
@@ -188,7 +188,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving body battery events: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_blood_pressure(start_date: str, end_date: str) -> str:
         """Get blood pressure data
         
@@ -205,7 +205,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving blood pressure data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_floors(date: str) -> str:
         """Get floors climbed data
         
@@ -221,7 +221,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving floors data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_training_status(date: str) -> str:
         """Get training status data
         
@@ -237,7 +237,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving training status data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_rhr_day(date: str) -> str:
         """Get resting heart rate data
         
@@ -253,7 +253,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving resting heart rate data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_heart_rates(date: str, hourly_only: bool = False) -> str:
         """Get heart rate data with optional hourly aggregation
 
@@ -296,7 +296,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving heart rate data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_hydration_data(date: str) -> str:
         """Get hydration data
         
@@ -312,7 +312,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving hydration data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_sleep_data(date: str, part: str = "full") -> str:
         """Get sleep data with options for retrieving specific parts or summary
 
@@ -462,7 +462,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving sleep data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_stress_data(date: str, hourly_only: bool = False) -> str:
         """Get stress data with optional hourly aggregation
 
@@ -505,7 +505,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving stress data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_respiration_data(date: str) -> str:
         """Get respiration data
         
@@ -521,7 +521,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving respiration data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_spo2_data(date: str) -> str:
         """Get SpO2 (blood oxygen) data
         
@@ -537,7 +537,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving SpO2 data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_all_day_stress(date: str, hourly_only: bool = False) -> str:
         """Get all-day stress data with optional hourly aggregation
 
@@ -580,7 +580,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving all-day stress data: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_all_day_events(date: str) -> str:
         """Get daily wellness events data
         

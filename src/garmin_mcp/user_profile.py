@@ -17,7 +17,7 @@ def configure(client):
 def register_tools(app):
     """Register all user profile tools with the MCP server app"""
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_full_name() -> str:
         """Get user's full name from profile"""
         try:
@@ -26,7 +26,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving user's full name: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_unit_system() -> str:
         """Get user's preferred unit system from profile"""
         try:
@@ -35,7 +35,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving unit system: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_user_profile() -> str:
         """Get user profile information"""
         try:
@@ -46,7 +46,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving user profile: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_userprofile_settings() -> str:
         """Get user profile settings"""
         try:
@@ -57,7 +57,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving user profile settings: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_heart_rate_zones() -> str:
         """Get user's heart rate zones and max heart rate setting
 

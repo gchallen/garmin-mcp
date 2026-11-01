@@ -17,7 +17,7 @@ def configure(client):
 def register_tools(app):
     """Register all gear management tools with the MCP server app"""
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_gear(user_profile_id: str) -> str:
         """Get all gear registered with the user account
         
@@ -32,7 +32,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving gear: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_gear_defaults(user_profile_id: str) -> str:
         """Get default gear settings
         
@@ -47,7 +47,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving gear defaults: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_gear_stats(gear_uuid: str) -> str:
         """Get statistics for specific gear
         

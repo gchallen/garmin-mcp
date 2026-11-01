@@ -132,7 +132,7 @@ def main():
     app = womens_health.register_tools(app)
 
     # Add activity listing tool directly to the app
-    @app.tool()
+    @app.tool(structured_output=False)
     async def list_activities(limit: int = 5, offset: int = 0, summary_only: bool = False) -> str:
         """List recent Garmin activities with pagination support
 

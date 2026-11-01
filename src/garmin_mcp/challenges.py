@@ -17,7 +17,7 @@ def configure(client):
 def register_tools(app):
     """Register all challenges-related tools with the MCP server app"""
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_goals(goal_type: str = "active") -> str:
         """Get Garmin Connect goals (active, future, or past)
 
@@ -32,7 +32,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving {goal_type} goals: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_personal_record() -> str:
         """Get personal records for user"""
         try:
@@ -43,7 +43,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving personal records: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_earned_badges() -> str:
         """Get earned badges for user"""
         try:
@@ -54,7 +54,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving earned badges: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_adhoc_challenges(start: int = 0, limit: int = 100) -> str:
         """Get adhoc challenges data
 
@@ -70,7 +70,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving adhoc challenges: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_available_badge_challenges(start: int = 1, limit: int = 100) -> str:
         """Get available badge challenges data
 
@@ -86,7 +86,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving available badge challenges: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_badge_challenges(start: int = 1, limit: int = 100) -> str:
         """Get badge challenges data
 
@@ -102,7 +102,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving badge challenges: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_non_completed_badge_challenges(start: int = 1, limit: int = 100) -> str:
         """Get non-completed badge challenges data
 
@@ -118,7 +118,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving non-completed badge challenges: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_race_predictions() -> str:
         """Get race predictions for user"""
         try:
@@ -129,7 +129,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving race predictions: {str(e)}"
 
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_inprogress_virtual_challenges(start_date: str, end_date: str) -> str:
         """Get in-progress virtual challenges/expeditions between dates
 

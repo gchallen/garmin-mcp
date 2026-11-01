@@ -17,7 +17,7 @@ def configure(client):
 def register_tools(app):
     """Register all training-related tools with the MCP server app"""
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_progress_summary_between_dates(
         start_date: str, end_date: str, metric: str
     ) -> str:
@@ -38,7 +38,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving progress summary: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_hill_score(start_date: str, end_date: str) -> str:
         """Get hill score data between dates
 
@@ -54,7 +54,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving hill score data: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_endurance_score(start_date: str, end_date: str) -> str:
         """Get endurance score data between dates
 
@@ -70,7 +70,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving endurance score data: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_training_effect(activity_id: int) -> str:
         """Get training effect data for a specific activity
         
@@ -85,7 +85,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving training effect data: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_max_metrics(date: str) -> str:
         """Get max metrics data (like VO2 Max and fitness age)
         
@@ -100,7 +100,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving max metrics data: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_hrv_data(date: str) -> str:
         """Get Heart Rate Variability (HRV) data
         
@@ -115,7 +115,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving HRV data: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def get_fitnessage_data(date: str) -> str:
         """Get fitness age data
         
@@ -130,7 +130,7 @@ def register_tools(app):
         except Exception as e:
             return f"Error retrieving fitness age data: {str(e)}"
     
-    @app.tool()
+    @app.tool(structured_output=False)
     async def request_reload(date: str) -> str:
         """Request reload of epoch data
         
